@@ -5,6 +5,7 @@
 
 #include "Player.h"
 #include "ShaderProgram.h"
+#include <Camera.h>
 
 
 // Public Functions:
@@ -42,7 +43,9 @@ void Player::Draw(float deltaTime, int numOfPlatforms, std::vector<Platform>& pl
 
 	// Make sure player doesn't get out of screen
 	playerPosition.x = glm::max(-1.0f + circleRadius, glm::min(1.0f - circleRadius, playerPosition.x));
-	playerPosition.y = glm::min(highestPoint, glm::max(playerPosition.y + velocityY, lowestPoint));
+	//playerPosition.y = glm::min(highestPoint, glm::max(playerPosition.y + velocityY, lowestPoint));
+	playerPosition.y = glm::max(playerPosition.y + velocityY, lowestPoint);
+
 
 	// Check if player is on ground
 	onGround = false;
@@ -68,6 +71,10 @@ void Player::Draw(float deltaTime, int numOfPlatforms, std::vector<Platform>& pl
 	modelMat = glm::translate(modelMat, playerPosition);
 	shaderProgram.setMat4Uniform("modelMat", modelMat);
 
+	//Set view matrix
+	extern Camera camera;
+	shaderProgram.setMat4Uniform("viewMat", camera.GetViewMatrix());
+
 	// Check if collisions occur
 	for (int i = 0; i < numOfPlatforms; i++)
 		if (DetectCollision(platforms[i])) Collide(platforms[i]);
@@ -88,10 +95,18 @@ void Player::Draw(float deltaTime, int numOfPlatforms, std::vector<Platform>& pl
 
 
 void Player::Move(Player_Movement key, float deltaTime) {
-	if (key == UP && onGround) velocityY = kickoff + (speedup / 2000); // jump
-
-	if (key == RIGHT) playerPosition.x += (velocityX + speedup) * deltaTime; // move right
-	if (key == LEFT)  playerPosition.x -= (velocityX + speedup) * deltaTime; // move left
+	if (key == UP && onGround)
+	{
+		velocityY = kickoff + (speedup / 2000); // jump
+	}
+	if (key == RIGHT)
+	{
+		playerPosition.x += (velocityX + speedup) * deltaTime; // move right
+	}
+	if (key == LEFT) 
+	{
+		playerPosition.x -= (velocityX + speedup) * deltaTime; // move left
+	}
 }
 
 

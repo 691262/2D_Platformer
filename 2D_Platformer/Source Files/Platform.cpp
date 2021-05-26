@@ -5,6 +5,9 @@
 #include "ShaderProgram.h"
 #include "Ground.h"
 #include "Platform.h"
+#include <Camera.h>
+
+extern Camera camera;
 
 Platform::Platform(float positionAttribute[], unsigned int positionIndices[], const char * vrtxShaderPath, const char * frgmtShaderPath)
 	:Ground(positionAttribute, positionIndices, vrtxShaderPath, frgmtShaderPath) { // call parent version
@@ -28,6 +31,7 @@ void Platform::Draw(glm::vec3 translationVector) {
 	glm::mat4 modelMat = glm::mat4(1.0f); // local -> world
 	modelMat = glm::translate(modelMat, translationVector);
 	shaderProgram.setMat4Uniform("modelMat", modelMat);
+	shaderProgram.setMat4Uniform("viewMat", camera.GetViewMatrix());
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	shaderProgram.deactivate();

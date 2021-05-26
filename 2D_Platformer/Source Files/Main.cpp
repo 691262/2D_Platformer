@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include <vector>
 
 #include <GLAD/glad.h>
@@ -10,6 +11,7 @@
 #include "Ground.h"
 #include "Platform.h"
 #include "ShaderProgram.h"
+#include "Camera.h"
 
 // OpenGL context
 GLFWwindow *window;
@@ -19,8 +21,8 @@ float lastFrame = 0.0f;
 float deltaTime = 0.0f;
 
 // Settings
-unsigned int SCR_WIDTH  = 700;
-unsigned int SCR_HEIGHT = 700;
+unsigned int SCR_WIDTH  = 800;
+unsigned int SCR_HEIGHT = 800;
 
 // Functions
 void InitGLAD();
@@ -49,7 +51,7 @@ float platformsVertices[4 * 3]; // 4 points, 3 coordinates each
 glm::vec3 platformsPositions[numOfPlatforms];
 void CalculatePlatformsData();
 
-
+extern Camera camera(glm::vec3(0, 0, 0));
 
 int main () {
 	InitGLFW(); // Create opengl context
@@ -72,7 +74,6 @@ int main () {
 
 	Text timerText(0, 36, "Shaders/fontShader.vs", "Shaders/fontShader.fs", SCR_WIDTH, SCR_HEIGHT);
 
-
 	while (!glfwWindowShouldClose(window)) {
 		// Update time variables
 		float crntFrame = (float)glfwGetTime();
@@ -87,6 +88,9 @@ int main () {
 		ground.Draw();
 		for (int i = 0; i < numOfPlatforms; i++) platforms[i].Draw(platformsPositions[i]);
 		player.Draw(deltaTime, numOfPlatforms, platforms);
+
+		//Move camera up slowly
+		camera.Position = camera.Position + glm::vec3(0.0f, 0.001f, 0.0f);
 
 		int timeNow = (int)round(glfwGetTime());
 		timerText.RenderText(FormatTime(timeNow), 550.0f, 650.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -139,7 +143,6 @@ void ProcessKeyboardInput(Player &player) {
 		player.Move(RIGHT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) // move left
 		player.Move(LEFT, deltaTime);
-
 
 	glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) ? player.GetHyper() : player.BeNormal();
 }
@@ -199,19 +202,19 @@ void CalculatePlatformsData() {
 	// Position data:
 	// first vertex
 	platformsVertices[0] = -0.25f;
-	platformsVertices[1] =  -0.08f;
+	platformsVertices[1] =  -0.02f;
 	platformsVertices[2] =   0.0f;
     // second vertex
 	platformsVertices[3] = 0.25f;
-	platformsVertices[4] = -0.08f;
+	platformsVertices[4] = -0.02f;
 	platformsVertices[5] =  0.0f;
 	// third vertex
 	platformsVertices[6] = 0.25f;
-	platformsVertices[7] =  0.08f;
+	platformsVertices[7] =  0.02f;
 	platformsVertices[8] =  0.0f;
 	// fourth vertex
 	platformsVertices[9] = -0.25f;
-	platformsVertices[10] =  0.08f;
+	platformsVertices[10] =  0.02f;
 	platformsVertices[11] =  0.0f;
 
 

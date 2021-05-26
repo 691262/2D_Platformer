@@ -3,6 +3,7 @@
 
 #include "Ground.h"
 #include "ShaderProgram.h"
+#include <Camera.h>
 
 // Constructor
 Ground::Ground(float positionAttribute[], unsigned int positionIndices[], const char * vrtxShaderPath, const char * frgmtShaderPath) {
@@ -42,6 +43,8 @@ Ground::Ground(float positionAttribute[], unsigned int positionIndices[], const 
 void Ground::Draw() {
 	glBindVertexArray(vaoId);
 	shaderProgram.activate();
+	extern Camera camera;
+	shaderProgram.setMat4Uniform("viewMat", camera.GetViewMatrix());
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

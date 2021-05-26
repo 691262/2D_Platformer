@@ -53,5 +53,39 @@
     <ClInclude Include="header files\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\fonts\arial.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\circleShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\circleShader.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\fontShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\fontShader.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\groundShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\groundShader.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\platformsShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\platformsShader.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

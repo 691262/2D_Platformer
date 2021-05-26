@@ -30,14 +30,14 @@ private:
 	float timer = 0.0f;
 	bool tired = false;
 	float speedup = 0.0f;
-	float hyperTime = 2.0f;
-	float cooldownTime = 3.0f;
+	float hyperTime = 5.0f;
+	float cooldownTime = 0.5f;
 
 	float velocityY = 0.0f;
 	const float velocityX = 0.5f;
 
-	const float gravity = 0.002f;
-	const float kickoff = 0.00112f; // initial velocity when jumping
+	const float gravity = 0.02f;
+	const float kickoff = 0.017f; // initial velocity when jumping
 
 	float lowestPoint, highestPoint, rightmostPosition, leftmostPosition;
 
